@@ -1,19 +1,20 @@
-import React, {useCallback, useState, useContext} from "react";
+import React, {useMemo, useCallback, useState, useContext} from "react";
 import styled from 'styled-components';
 import {ProductsContext, TProduct} from "../context.tsx";
 import {ProductListItem} from "./ProductListItem.tsx";
 import {ListActions, type TFilterFields} from "./ListActions.tsx";
+import {Pagination} from "./Pagination.tsx";
 
 const ListContainer = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1rem;
     padding-inline-start: 2rem;
-    height: 100%;
-    overflow: auto;
 `
 
+const PAGE_SIZE = 5;
 export const ProductsList: React.FC = () => {
+  const [pageNumber, setPageNumber] = useState(0);
   const {products} = useContext(ProductsContext);
   const [productsFilter, setProductsFilter] = useState<TFilterFields>({
     search: '',
@@ -38,13 +39,17 @@ export const ProductsList: React.FC = () => {
     if (!search) return true;
     return product.name.includes(search) || product.description?.includes(search);
   }, [productsFilter]);
+  const filteredProducts = useMemo(() => products.filter(filterProducts).toSorted(sortProducts)
+    , [products, filterProducts, sortProducts]);
   return <>
     <ListContainer>
       <ListActions filter={productsFilter} onChange={setProductsFilter} />
-      {products
-        .filter(filterProducts)
-        .toSorted(sortProducts)
-        .map(product => <ProductListItem key={product.id} product={product} />)}
+      {
+        filteredProducts
+        .slice(PAGE_SIZE * pageNumber, PAGE_SIZE * pageNumber + PAGE_SIZE)
+        .map(product => <ProductListItem key={product.id} product={product} />)
+      }
+      <Pagination totalPages={filteredProducts.length / PAGE_SIZE} pageNumber={pageNumber} onChange={setPageNumber} />
     </ListContainer>
     </>
 }
