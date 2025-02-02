@@ -31,7 +31,6 @@ const useProductsApp = () => {
   const [selectedProduct, setSelectedProduct] = useState<TProduct>();
   const updateProduct = async (product: TProduct) => {
     await productStorageService.updateProduct(product);
-    console.log("=>(App.tsx:34) product", product);
     setProducts([...products.filter(({id}) => id !== product.id), product]);
     setSelectedProduct(undefined);
   }

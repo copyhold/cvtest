@@ -2,7 +2,6 @@ import {TProduct} from "../context.tsx";
 
 const PRODUCT_KEYS = 'store-products';
 const updateProduct: (product: TProduct) => Promise<TProduct> = async product => {
-  // store image in OPFS
   return await new Promise((res, rej) => {
     try {
       const productKeys: number[] = JSON.parse(localStorage.getItem(PRODUCT_KEYS) || '[]');

@@ -14,7 +14,9 @@ const StyledProductRow = styled.div<{isSelected: boolean}>`
     background: ${({isSelected}) => isSelected ? '#ddd' : 'unset'};
     
     img {
-      grid-area: img;
+        grid-area: img;
+        width: 100px;
+        height: 100px;
     }
     h3 {
         cursor: pointer;
@@ -39,7 +41,7 @@ export const ProductListItem:React.FC<{product: TProduct}> = ({product}) => {
     setProducts(products.filter(({id}) => id !== product.id));
   }
   return <StyledProductRow isSelected={selectedProduct?.id === product.id}>
-    <img src={''} />
+    <img src={product.image} />
     <h3 onClick={handleSelectProduct}>{product.name}</h3>
     <div>{product.description}</div>
     <button type={'button'} onClick={handleProductDelete}>Delete</button>

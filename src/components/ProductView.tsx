@@ -4,12 +4,19 @@ import {Formik, Form, ErrorMessage, useFormikContext} from 'formik';
 import {TProduct, ProductsContext} from "../context.tsx";
 import * as Yup from 'yup';
 
+const images = [
+  '/img_0.png',
+  '/img_1.png',
+  '/img_2.png',
+  '/img_3.png',
+];
 const ProductSchema = Yup.object().shape({
   name: Yup.string().required(),
   price: Yup.number().positive().required(),
   createdAt: Yup.date().required(),
   description: Yup.string(),
   id: Yup.number(),
+  image: Yup.string().oneOf(images),
 })
 
 const FieldsContainer = styled.fieldset`
@@ -46,6 +53,17 @@ const ProductForm: React.FC = () => {
       <input type={'hidden'} name={'createdAt'} value={values.createdAt.toString()} />
       <FieldsContainer>
         <legend>Product details</legend>
+        <label>
+          Product image
+          <select name={'image'} value={values.image} onChange={handleChange}>
+            <option value={''} disabled selected={!values.image}>Select image</option>
+            {
+              images.map(((img, i) => <option value={img} selected={values.image === img}>
+              {`Image ${i}`}
+            </option>))
+            }
+          </select>
+        </label>
         <label>
           Product name
           <input name={'name'} value={values.name} onChange={handleChange} />
