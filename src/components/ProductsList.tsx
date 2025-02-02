@@ -49,7 +49,7 @@ export const ProductsList: React.FC = () => {
         .slice(PAGE_SIZE * pageNumber, PAGE_SIZE * pageNumber + PAGE_SIZE)
         .map(product => <ProductListItem key={product.id} product={product} />)
       }
-      <Pagination totalPages={filteredProducts.length / PAGE_SIZE} pageNumber={pageNumber} onChange={setPageNumber} />
+      <Pagination totalPages={Math.ceil(filteredProducts.length / PAGE_SIZE)} pageNumber={pageNumber} onChange={setPageNumber} />
     </ListContainer>
     </>
 }

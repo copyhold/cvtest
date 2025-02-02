@@ -20,6 +20,7 @@ export const Pagination: React.FC<{
   return (
     <StyledFooter>
       <button disabled={pageNumber===0} onClick={() => onChange(pageNumber - 1)}>&lt;&lt;</button>
+      {`${pageNumber + 1} of ${totalPages}`}
       <button disabled={totalPages===pageNumber + 1} onClick={() => onChange(pageNumber + 1)}>&gt;&gt;</button>
     </StyledFooter>
   )
