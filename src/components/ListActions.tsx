@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import styled from 'styled-components';
-import {ProductsContext} from "../context.tsx";
+import {ProductsContext, TProduct} from "../context.tsx";
 
 const StyledContainer = styled.header`
     display: flex;
@@ -10,7 +10,7 @@ const StyledContainer = styled.header`
     padding-block: .5rem;
     background: #fff;
 `
-const filterFields = ['createdAt' , 'id' , 'name']
+const filterFields: Array<keyof TProduct> = ['createdAt' , 'id' , 'name'];
 export type TFilterFields = {
   search: string;
   order: typeof filterFields[number]
@@ -30,7 +30,7 @@ export const ListActions: React.FC<{filter: TFilterFields, onChange: (filter: TF
   }
   const handleChangeOrder = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const {target: {value}} = e;
-    onChange({...filter, order: value});
+    onChange({...filter, order: value as keyof TProduct});
   }
   return (
     <StyledContainer>
