@@ -12,11 +12,15 @@ const StyledProductRow = styled.div<{isSelected: boolean}>`
     "img title title"
     "img description button";
     background: ${({isSelected}) => isSelected ? '#ddd' : 'unset'};
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
     
     img {
         grid-area: img;
-        width: 100px;
-        height: 100px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     h3 {
         cursor: pointer;
@@ -25,11 +29,14 @@ const StyledProductRow = styled.div<{isSelected: boolean}>`
     }
     > div {
         grid-area: description;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     button {
         grid-area: button;
         align-self: end;
-        margin: .5rem;
     }
 `
 export const ProductListItem:React.FC<{product: TProduct}> = ({product}) => {
